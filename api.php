@@ -1,4 +1,7 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: X-Requested-With");
+header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 header("Content-Type:application/json");
 require_once('config/db.php');
 
@@ -30,6 +33,7 @@ switch ($opt) {
         // PDO
         $stmt = $conn->prepare("INSERT INTO data (nm_brg, stk_brg, jml_trjl, tgl_trns, jns_brg) VALUES (?, ?, ?, ?, ?)");
         $result = $stmt->execute([$nm_brg, $stock, $jml_tjl, $transaksi, $jns_brg]);
+        // tipe hasil boolean.
         echo json_encode([
             'success' => $result
         ]);
@@ -48,6 +52,7 @@ switch ($opt) {
 
         $stmt = $conn->prepare("UPDATE data SET nm_brg = ?, stk_brg = ?, jml_trjl = ?, tgl_trns = ?, jns_brg = ? WHERE id_brg= ?");
         $result =  $stmt->execute([$nm_brg, $stock, $jml_tjl, $transaksi, $jns_brg, $id]);
+        // tipe hasil boolean.
         echo json_encode([
             'success' => $result
         ]);
@@ -56,6 +61,7 @@ switch ($opt) {
         $id = (int) $_POST['id'];
         $stmt = $conn->prepare("DELETE FROM data WHERE id_brg = ?");
         $result = $stmt->execute([$id]);
+        // tipe hasil boolean.
         echo json_encode([
             'success' => $result
         ]);
